@@ -23,7 +23,7 @@ public static class Divisors {
                 results.Add(i);
             }
         }
-
+        
         return results;
     }
 }
