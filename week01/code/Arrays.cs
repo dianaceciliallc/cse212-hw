@@ -8,6 +8,12 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
+        // Plan: 
+        // 1. Initialize an array of doubles with the specified length to hold the multiples.
+        // 2. Loop through the array indices from 0 up to length - 1.
+        // 3. Calculate each multiple by multiplying the number by (i + 1) and store it in the array.
+        // 4. Return the populated array of multiples.
+
         // here we initialize an array of doubles with the specified length to hold the multiples of the given number
         var multiples = new double[length];
         // we set the limit of the loop to the length of the array, so we can fill each index with the appropriate multiple
@@ -29,9 +35,30 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Plan: 
+        // 1. Extract the last 'amount' of elements using GetRange to move them to the front.
+        // 2. Insert that extracted range at the beginning of a new list.
+        // 3. Loop through the remaining elements of the original list and add them to the end.
+        // 4. Clear the original list and add all the rotated values back to it.
+
+        // here we create a new list to hold the rotated values
+        List<int> rotated = new();
+
+        // here we get the last 'amount' of elements from the original list to be moved to the front
+        var range = data.GetRange(data.Count - amount, amount);
+
+        // here we insert the range of elements at the beginning of the rotated list
+        rotated.InsertRange(0, range);
+
+        // here we loop through the original list, stopping before the last 'amount' of elements, to add the remaining elements to the rotated list
+        for (int i = 0; i < data.Count - amount; i++)
+        {
+            // here we add each remaining element to the end of the rotated list so they come after the front elements
+            rotated.Add(data[i]);
+        }
+
+        // here we clear the original list and add all the rotated values
+        data.Clear();
+        data.AddRange(rotated);
     }
 }
