@@ -11,24 +11,35 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Create a queue with an invalid maximum size and verify that it defaults to 10.
+        // Expected Result: max_size must be 10 and size must be 0.
         Console.WriteLine("Test 1");
+        var cs = new CustomerService(0);
+        Console.WriteLine(cs);
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: Attempt to serve a customer when the queue is completely empty.
+        // Expected Result: It should display an error message indicating that there are no customers in the queue.
         Console.WriteLine("Test 2");
+        var cs2 = new CustomerService(3);
+        cs2.ServeCustomer();
+        Console.WriteLine(cs2);
 
         // Defect(s) Found: 
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: Add more customers than the allowed maximum size to verify that it blocks new entries when full.
+        // Expected Result: When attempting to add a customer while the queue is at maximum capacity, it should display "Maximum Number of Customers in Queue."
+        Console.WriteLine("Test 3");
+        var cs3 = new CustomerService(1);
+        /* cs3.AddNewCustomer(); */
+        Console.WriteLine(cs3);
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +78,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,9 +99,16 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        // Correction 2 and 3: Validate first if the queue is empty before extracting anything, 
+        // thus avoiding the "ArgumentOutOfRangeException" error.
+        if (_queue.Count == 0) {
+            Console.WriteLine("There are no customers in the queue.");
+            return;
+        }
+
         var customer = _queue[0];
         Console.WriteLine(customer);
+        _queue.RemoveAt(0);
     }
 
     /// <summary>
